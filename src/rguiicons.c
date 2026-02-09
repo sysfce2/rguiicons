@@ -633,8 +633,8 @@ int main(int argc, char *argv[])
     if ((inFileName[0] != '\0') && (IsFileExtension(inFileName, ".rgi")))
     {
         char **tempIconsName = GuiLoadIcons(inFileName, true);
-        for (int i = 0; i < RAYGUI_ICON_MAX_ICONS; i++) { strcpy(guiIconsName[i], tempIconsName[i]); free(tempIconsName[i]); }
-        free(tempIconsName);
+        for (int i = 0; i < RAYGUI_ICON_MAX_ICONS; i++) { strcpy(guiIconsName[i], tempIconsName[i]); RAYGUI_FREE(tempIconsName[i]); }
+        RAYGUI_FREE(tempIconsName);
 
         SetWindowTitle(TextFormat("%s v%s | File: %s", toolName, toolVersion, GetFileName(inFileName)));
     }
@@ -765,8 +765,8 @@ int main(int argc, char *argv[])
                 // Load .rgi data into raygui icons set (and gui icon names for the tool)
                 char **tempIconsName = GuiLoadIcons(droppedFiles.paths[0], true);
                 memcpy(currentIcons, guiIcons, RAYGUI_ICON_MAX_ICONS*RAYGUI_ICON_DATA_ELEMENTS*sizeof(unsigned int));
-                for (int i = 0; i < RAYGUI_ICON_MAX_ICONS; i++) { strcpy(guiIconsName[i], tempIconsName[i]); free(tempIconsName[i]); }
-                free(tempIconsName);
+                for (int i = 0; i < RAYGUI_ICON_MAX_ICONS; i++) { strcpy(guiIconsName[i], tempIconsName[i]); RAYGUI_FREE(tempIconsName[i]); }
+                RAYGUI_FREE(tempIconsName);
 
                 strcpy(inFileName, droppedFiles.paths[0]);
                 SetWindowTitle(TextFormat("%s v%s | File: %s", toolName, toolVersion, GetFileName(inFileName)));
@@ -1145,8 +1145,8 @@ int main(int argc, char *argv[])
                     // Load gui icons data (and gui icon names for the tool)
                     char **tempIconsName = GuiLoadIcons(inFileName, true);
                     memcpy(currentIcons, guiIcons, RAYGUI_ICON_MAX_ICONS*RAYGUI_ICON_DATA_ELEMENTS*sizeof(unsigned int));
-                    for (int i = 0; i < RAYGUI_ICON_MAX_ICONS; i++) { strcpy(guiIconsName[i], tempIconsName[i]); free(tempIconsName[i]); }
-                    free(tempIconsName);
+                    for (int i = 0; i < RAYGUI_ICON_MAX_ICONS; i++) { strcpy(guiIconsName[i], tempIconsName[i]); RAYGUI_FREE(tempIconsName[i]); }
+                    RAYGUI_FREE(tempIconsName);
 
                     SetWindowTitle(TextFormat("%s v%s | File: %s", toolName, toolVersion, GetFileName(inFileName)));
                     saveChangesRequired = false;
@@ -1420,8 +1420,8 @@ static void ProcessCommandLine(int argc, char *argv[])
         // Load input file: icons data and name ids
         char **tempIconsName = GuiLoadIcons(inFileName, true);
         memcpy(currentIcons, guiIcons, RAYGUI_ICON_MAX_ICONS*RAYGUI_ICON_DATA_ELEMENTS*sizeof(unsigned int));
-        for (int i = 0; i < RAYGUI_ICON_MAX_ICONS; i++) { strcpy(guiIconsName[i], tempIconsName[i]); free(tempIconsName[i]); }
-        free(tempIconsName);
+        for (int i = 0; i < RAYGUI_ICON_MAX_ICONS; i++) { strcpy(guiIconsName[i], tempIconsName[i]); RAYGUI_FREE(tempIconsName[i]); }
+        RAYGUI_FREE(tempIconsName);
 
         // Process input --> output
         if (IsFileExtension(outFileName, ".rgi")) SaveIcons(outFileName);
