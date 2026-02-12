@@ -1177,7 +1177,7 @@ int main(int argc, char *argv[])
 
                 #if defined(PLATFORM_WEB)
                     // Download file from MEMFS (emscripten memory filesystem)
-                    // NOTE: Second argument must be a simple filename (we can't use directories)
+                    // NOTE: Second argument must be a simple filename (can't use directories)
                     // NOTE: Included security check to (partially) avoid malicious code on PLATFORM_WEB
                     if (strchr(outFileName, '\'') == NULL) emscripten_run_script(TextFormat("saveFileFromMEMFSToDisk('%s','%s')", outFileName, GetFileName(outFileName)));
                 #endif
@@ -1255,7 +1255,7 @@ int main(int argc, char *argv[])
 
                 #if defined(PLATFORM_WEB)
                     // Download file from MEMFS (emscripten memory filesystem)
-                    // NOTE: Second argument must be a simple filename (we can't use directories)
+                    // NOTE: Second argument must be a simple filename (can't use directories)
                     emscripten_run_script(TextFormat("saveFileFromMEMFSToDisk('%s','%s')", outFileName, GetFileName(outFileName)));
                 #endif
                 }
@@ -1290,7 +1290,7 @@ int main(int argc, char *argv[])
 
                 #if defined(PLATFORM_WEB)
                     // Download file from MEMFS (emscripten memory filesystem)
-                    // NOTE: Second argument must be a simple filename (we can't use directories)
+                    // NOTE: Second argument must be a simple filename (can't use directories)
                     emscripten_run_script(TextFormat("saveFileFromMEMFSToDisk('%s','%s')", outFileName, GetFileName(outFileName)));
                 #endif
                 }
@@ -1641,7 +1641,7 @@ static void DrawIcon(unsigned int *iconset, int iconId, int posX, int posY, int 
         {
             if (RGI_BIT_CHECK(iconset[iconId*RAYGUI_ICON_DATA_ELEMENTS + i], k))
             {
-                // NOTE: We draw the icon pixel-by-pixel using rectangles
+                // NOTE: Drawing the icon pixel-by-pixel using rectangles
                 DrawRectangle(posX + (k%RAYGUI_ICON_SIZE)*pixelSize, posY + y*pixelSize, pixelSize, pixelSize, color);
             }
 
@@ -1661,7 +1661,7 @@ static void DrawIconData(unsigned int *data, int x, int y, int pixelSize, Color 
         {
             if (RGI_BIT_CHECK(data[i], k))
             {
-                // NOTE: We draw the icon pixel-by-pixel using rectangles
+                // NOTE: Drawing the icon pixel-by-pixel using rectangles
                 DrawRectangle(x + (k%RAYGUI_ICON_SIZE)*pixelSize, y + j*pixelSize, pixelSize, pixelSize, color);
             }
 
