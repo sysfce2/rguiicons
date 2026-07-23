@@ -38,7 +38,7 @@
 *                           REVIEWED: Status bar to show more info
 *                           REVIEWED: Added new UI styles: Amber, Genesis
 *                           REVIEWED: Full UI to accomodate more icons
-*                           UPDATED: Using raylib 6.1-dev and raygui 5.0-dev
+*                           UPDATED: Using raylib 6.1-dev and raygui 5.0
 *
 *       3.1  (06-Apr-2024)  ADDED: Report Issue/Features window (Open GitHub)
 *                           ADDED: New icons: WARNING, HELP_BOX, INFO_BOX
@@ -1297,15 +1297,16 @@ int main(int argc, char *argv[])
             if (showIssueReportWindow)
             {
                 Rectangle messageBox = { (float)screenWidth/2 - 300/2, (float)screenHeight/2 - 190/2 - 20, 300, 190 };
-                int result = GuiMessageBox(messageBox, "#220#Report Issue",
-                    "Do you want to report any issue or\nfeature request for this program?\n\ngithub.com/raysan5/rguiicons", "#186#Report on GitHub");
+                int btnActive = -1;
+                GuiMessageBox(messageBox, "#220#Report Issue",
+                    "Do you want to report any issue or\nfeature request for this program?\n\ngithub.com/raysan5/raylib-project-creator", "#186#Report on GitHub", &btnActive);
 
-                if (result == 1)    // Report issue pressed
+                if (btnActive == 1)    // Report issue pressed
                 {
                     OpenURL("https://github.com/raysan5/rguiicons/issues");
                     showIssueReportWindow = false;
                 }
-                else if (result == 0) showIssueReportWindow = false;
+                else if (btnActive == 0) showIssueReportWindow = false;
             }
             //----------------------------------------------------------------------------------------
 
@@ -1314,7 +1315,8 @@ int main(int argc, char *argv[])
             if (showExportWindow)
             {
                 Rectangle messageBox = { (float)screenWidth/2 - 280/2, (float)screenHeight/2 - 176/2 - 30, 280, 176 };
-                int result = GuiMessageBox(messageBox, "#7#Export Iconset File", " ", "#7#Export Iconset");
+                int btnActive = -1;
+                GuiMessageBox(messageBox, "#7#Export Iconset File", " ", "#7#Export Iconset", &btnActive);
 
                 GuiLabel((Rectangle){ messageBox.x + 12, messageBox.y + 24 + 12, 106, 24 }, "Iconset Name:");
                 if (GuiTextBox((Rectangle){ messageBox.x + 12 + 92, messageBox.y + 24 + 12, 164, 24 }, styleNameText, 128, styleNameEditMode)) styleNameEditMode = !styleNameEditMode;
@@ -1326,14 +1328,14 @@ int main(int argc, char *argv[])
                 GuiCheckBox((Rectangle){ messageBox.x + 20, messageBox.y + 52 + 32 + 24, 16, 16 }, "Embed name IDs as zTXt chunk", &nameIdsChunkChecked);
                 GuiEnable();
 
-                if (result == 1)    // Export button pressed
+                if (btnActive == 1)    // Export button pressed
                 {
                     showExportWindow = false;
                     showExportFileDialog = true;
 
                     snprintf(outFileName, sizeof(outFileName), "%s", GetFileNameWithoutExt(styleNameText));
                 }
-                else if (result == 0) showExportWindow = false;
+                else if (btnActive == 0) showExportWindow = false;
             }
             //----------------------------------------------------------------------------------
 
@@ -1341,10 +1343,12 @@ int main(int argc, char *argv[])
             //----------------------------------------------------------------------------------------
             if (showExitWindow)
             {
-                int result = GuiMessageBox((Rectangle){ screenWidth/2 - 125, screenHeight/2 - 50, 250, 100 }, TextFormat("#159#Closing %s", toolName), "Do you really want to exit?", "Yes;No");
+                int btnActive = -1;
+                GuiMessageBox((Rectangle){ screenWidth/2 - 125, screenHeight/2 - 50, 250, 100 },
+                    TextFormat("#159#Closing %s", toolName), "Do you really want to exit?", "#112#Yes;#113#No", &btnActive);
 
-                if ((result == 0) || (result == 2)) showExitWindow = false;
-                else if (result == 1) closeWindow = true;
+                if ((btnActive == 0) || (btnActive == 2)) showExitWindow = false;
+                else if (btnActive == 1) closeWindow = true;
             }
             //----------------------------------------------------------------------------------------
 
@@ -1377,11 +1381,13 @@ int main(int argc, char *argv[])
             //----------------------------------------------------------------------------------------
             if (showSaveFileDialog)
             {
+                int result = -1;
 #if defined(CUSTOM_MODAL_DIALOGS)
                 //int result = GuiFileDialog(DIALOG_TEXTINPUT, "Save raygui icons file...", outFileName, "Ok;Cancel", NULL);
-                int result = GuiTextInputBox((Rectangle){ screenWidth/2 - 280/2, screenHeight/2 - 112/2 - 30, 280, 112 }, "#2#Save raygui icon file...", NULL, "#2#Save", outFileName, 512, NULL);
+                GuiTextInputBox((Rectangle){ screenWidth/2 - 280/2, screenHeight/2 - 112/2 - 30, 280, 112 },
+                    "#2#Save raygui icon file...", NULL, outFileName, 512, "#2#Save", &result, NULL);
 #else
-                int result = GuiFileDialog(DIALOG_SAVE_FILE, "Save raygui icons file...", outFileName, "*.rgi", "raygui Icons Files (*.rgi)");
+                result = GuiFileDialog(DIALOG_SAVE_FILE, "Save raygui icons file...", outFileName, "*.rgi", "raygui Icons Files (*.rgi)");
 #endif
                 if (result == 1)
                 {
@@ -1408,9 +1414,11 @@ int main(int argc, char *argv[])
             //----------------------------------------------------------------------------------------
             if (showExportFileDialog)
             {
+                int result = -1;
 #if defined(CUSTOM_MODAL_DIALOGS)
                 //int result = GuiFileDialog(DIALOG_TEXTINPUT, "Export raygui icons file...", outFileName, "Ok;Cancel", NULL);
-                int result = GuiTextInputBox((Rectangle){ screenWidth/2 - 280/2, screenHeight/2 - 112/2 - 60, 280, 112 }, "#7#Export raygui icon file...", NULL, "#7#Export", outFileName, 512, NULL);
+                GuiTextInputBox((Rectangle){ screenWidth/2 - 280/2, screenHeight/2 - 112/2 - 60, 280, 112 },
+                    "#7#Export raygui icon file...", NULL, outFileName, 512, "#7#Export", &result, NULL);
 #else
                 char filters[64] = { 0 };   // Consider different supported file types
 
@@ -1422,7 +1430,7 @@ int main(int argc, char *argv[])
                     default: break;
                 }
 
-                int result = GuiFileDialog(DIALOG_SAVE_FILE, "Export raygui icons file...", outFileName, filters, TextFormat("File type (%s)", filters));
+                result = GuiFileDialog(DIALOG_SAVE_FILE, "Export raygui icons file...", outFileName, filters, TextFormat("File type (%s)", filters));
 #endif
                 if (result == 1)
                 {
