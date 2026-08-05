@@ -687,7 +687,7 @@ int main(int argc, char *argv[])
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!closeWindow)    // Detect window close button
+    while (!closeWindow)    // Program must finish
     {
         // WARNING: ASINCIFY requires this line,
         // it contains the call to emscripten_sleep() for PLATFORM_WEB
