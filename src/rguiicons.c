@@ -1227,7 +1227,17 @@ int main(int argc, char *argv[])
             GuiLabel((Rectangle){ 12, 400, 80, 24 }, "ICON DATA:");
             GuiSetStyle(TEXTBOX, TEXT_ALIGNMENT, TEXT_ALIGN_CENTER);
             for (int j = 0; j < RAYGUI_ICON_SIZE/2; j++)
+            {
                 GuiTextBox((Rectangle){ 12 + 76 + j*96, 400, 92, 24 }, (char *)TextFormat("0x%08x", currentIcons[selectedIcon*RAYGUI_ICON_DATA_ELEMENTS + j]), 256, false);
+                if (CheckCollisionPointRec(GetMousePosition(), (Rectangle){ 12 + 76 + j*96, 400, 92, 24 }))
+                {
+                    GuiDrawRectangle((Rectangle){ anchor01.x + 672 + 128 - RAYGUI_ICON_SIZE*iconEditScale/2, 
+                        anchor01.y + 108 + 128 - RAYGUI_ICON_SIZE*iconEditScale/2 + (RAYGUI_ICON_SIZE*iconEditScale/8)*j,
+                        RAYGUI_ICON_SIZE*iconEditScale, RAYGUI_ICON_SIZE*iconEditScale/8 }, 2.0f,
+                        GetColor(GuiGetStyle(DEFAULT, BORDER_COLOR_FOCUSED)),
+                        Fade(GetColor(GuiGetStyle(DEFAULT, BASE_COLOR_FOCUSED)), 0.2f));
+                }
+            }
             GuiSetStyle(TEXTBOX, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
             if (GuiButton((Rectangle){ 12 + 76 + RAYGUI_ICON_SIZE/2*96, 400, 74, 24 }, "#16#Copy"))
             {
