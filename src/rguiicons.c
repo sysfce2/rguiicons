@@ -889,8 +889,8 @@ int main(int argc, char *argv[])
 
                 SetIconData(currentIcons, movePosition, GetIconData(currentIcons, selectedIcon));
                 SetIconData(currentIcons, selectedIcon, tmpIconData);
-                strcpy(guiIconsName[movePosition], guiIconsName[selectedIcon]);
-                strcpy(guiIconsName[selectedIcon], tmpIconName);
+                strncpy(guiIconsName[movePosition], guiIconsName[selectedIcon], 32);
+                strncpy(guiIconsName[selectedIcon], tmpIconName, 32);
 
                 selectedIcon = movePosition;
             }
@@ -899,18 +899,18 @@ int main(int argc, char *argv[])
         // Move selected icon down on the list
         if ((IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_DOWN)) || mainToolbarState.btnMoveDownPressed)
         {
-            if (selectedIcon < (RAYGUI_ICON_MAX_ICONS - 32)) // Last line in the grid or smaller
+            if ((selectedIcon >= 0) && (selectedIcon < (RAYGUI_ICON_MAX_ICONS - 32))) // Last line in the grid or smaller
             {
                 int movePosition = selectedIcon + 32;
                 unsigned int tmpIconData[8] = { 0 };
                 char tmpIconName[32] = { 0 };
                 memcpy(tmpIconData, GetIconData(currentIcons, movePosition), RAYGUI_ICON_DATA_ELEMENTS*sizeof(unsigned int));
-                strcpy(tmpIconName, guiIconsName[movePosition]);
+                memcpy(tmpIconName, guiIconsName[movePosition], 32);
 
                 SetIconData(currentIcons, movePosition, GetIconData(currentIcons, selectedIcon));
                 SetIconData(currentIcons, selectedIcon, tmpIconData);
-                strcpy(guiIconsName[movePosition], guiIconsName[selectedIcon]);
-                strcpy(guiIconsName[selectedIcon], tmpIconName);
+                memcpy(guiIconsName[movePosition], guiIconsName[selectedIcon], 32);
+                memcpy(guiIconsName[selectedIcon], tmpIconName, 32);
 
                 selectedIcon = movePosition;
             }
@@ -919,18 +919,18 @@ int main(int argc, char *argv[])
         // Move selected icon left on the list
         if ((IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_LEFT)) || mainToolbarState.btnMoveLeftPressed)
         {
-            if (selectedIcon > 0)
+            if ((selectedIcon > 0) && (selectedIcon < RAYGUI_ICON_MAX_ICONS))
             {
                 int movePosition = selectedIcon - 1;
                 unsigned int tmpIconData[8] = { 0 };
                 char tmpIconName[32] = { 0 };
                 memcpy(tmpIconData, GetIconData(currentIcons, movePosition), RAYGUI_ICON_DATA_ELEMENTS*sizeof(unsigned int));
-                strcpy(tmpIconName, guiIconsName[movePosition]);
+                memcpy(tmpIconName, guiIconsName[movePosition], 32);
 
                 SetIconData(currentIcons, movePosition, GetIconData(currentIcons, selectedIcon));
                 SetIconData(currentIcons, selectedIcon, tmpIconData);
-                strcpy(guiIconsName[movePosition], guiIconsName[selectedIcon]);
-                strcpy(guiIconsName[selectedIcon], tmpIconName);
+                memcpy(guiIconsName[movePosition], guiIconsName[selectedIcon], 32);
+                memcpy(guiIconsName[selectedIcon], tmpIconName, 32);
 
                 selectedIcon = movePosition;
             }
@@ -939,18 +939,18 @@ int main(int argc, char *argv[])
         // Move selected icon right on the list
         if ((IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_RIGHT)) || mainToolbarState.btnMoveRightPressed)
         {
-            if (selectedIcon < RAYGUI_ICON_MAX_ICONS)
+            if ((selectedIcon >= 0) && (selectedIcon < RAYGUI_ICON_MAX_ICONS))
             {
                 int movePosition = selectedIcon + 1;
                 unsigned int tmpIconData[8] = { 0 };
                 char tmpIconName[32] = { 0 };
                 memcpy(tmpIconData, GetIconData(currentIcons, movePosition), RAYGUI_ICON_DATA_ELEMENTS*sizeof(unsigned int));
-                strcpy(tmpIconName, guiIconsName[movePosition]);
+                memcpy(tmpIconName, guiIconsName[movePosition], 32);
 
                 SetIconData(currentIcons, movePosition, GetIconData(currentIcons, selectedIcon));
                 SetIconData(currentIcons, selectedIcon, tmpIconData);
-                strcpy(guiIconsName[movePosition], guiIconsName[selectedIcon]);
-                strcpy(guiIconsName[selectedIcon], tmpIconName);
+                memcpy(guiIconsName[movePosition], guiIconsName[selectedIcon], 32);
+                memcpy(guiIconsName[selectedIcon], tmpIconName, 32);
 
                 selectedIcon = movePosition;
             }
@@ -1227,7 +1227,7 @@ int main(int argc, char *argv[])
             GuiLabel((Rectangle){ 12, 400, 80, 24 }, "ICON DATA:");
             GuiSetStyle(TEXTBOX, TEXT_ALIGNMENT, TEXT_ALIGN_CENTER);
             for (int j = 0; j < RAYGUI_ICON_SIZE/2; j++)
-                GuiTextBox((Rectangle){ 12 + 76 + j*96, 400, 92, 24 }, TextFormat("0x%08x", currentIcons[selectedIcon*RAYGUI_ICON_DATA_ELEMENTS + j]), 256, false);
+                GuiTextBox((Rectangle){ 12 + 76 + j*96, 400, 92, 24 }, (char *)TextFormat("0x%08x", currentIcons[selectedIcon*RAYGUI_ICON_DATA_ELEMENTS + j]), 256, false);
             GuiSetStyle(TEXTBOX, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
             if (GuiButton((Rectangle){ 12 + 76 + RAYGUI_ICON_SIZE/2*96, 400, 74, 24 }, "#16#Copy"))
             {
