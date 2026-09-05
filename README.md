@@ -6,7 +6,7 @@ Useful for tools icons customization. The best tool companion for [rGuiLayout](h
 
 `rGuiIcons` can be used for free as a [WebAssembly online tool](https://raylibtech.itch.io/rguiicons) and it can also be downloaded as a **standalone tool** for _Windows_ and _Linux_ with some extra features.
 
-**NOTE: Latest `rGuiIcons 3.0` release is intended to be used with [`raygui 4.0`](https://github.com/raysan5/raygui/releases/tag/4.0) release.**
+**NOTE: Latest `rGuiIcons 4.0` release is intended to be used with [`raygui 5.0`](https://github.com/raysan5/raygui/releases/tag/5.0) release.**
 
 ## Features
 
@@ -25,7 +25,7 @@ Useful for tools icons customization. The best tool companion for [rGuiLayout](h
 
 ## Screenshot
 
-![rGuiIcons](screenshots/rguiicons_v200_shot02.png)
+![rGuiIcons](screenshots/rguiicons_v400_shot01.png)
 
 ## Usage
 
