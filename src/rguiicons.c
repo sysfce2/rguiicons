@@ -1231,7 +1231,7 @@ int main(int argc, char *argv[])
                 GuiTextBox((Rectangle){ 12 + 76 + j*96, 400, 92, 24 }, (char *)TextFormat("0x%08x", currentIcons[selectedIcon*RAYGUI_ICON_DATA_ELEMENTS + j]), 256, false);
                 if (CheckCollisionPointRec(GetMousePosition(), (Rectangle){ 12 + 76 + j*96, 400, 92, 24 }))
                 {
-                    GuiDrawRectangle((Rectangle){ anchor01.x + 672 + 128 - RAYGUI_ICON_SIZE*iconEditScale/2, 
+                    GuiDrawRectangle((Rectangle){ anchor01.x + 672 + 128 - RAYGUI_ICON_SIZE*iconEditScale/2,
                         anchor01.y + 108 + 128 - RAYGUI_ICON_SIZE*iconEditScale/2 + (RAYGUI_ICON_SIZE*iconEditScale/8)*j,
                         RAYGUI_ICON_SIZE*iconEditScale, RAYGUI_ICON_SIZE*iconEditScale/8 }, 2.0f,
                         GetColor(GuiGetStyle(DEFAULT, BORDER_COLOR_FOCUSED)),
