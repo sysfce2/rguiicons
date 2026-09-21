@@ -790,9 +790,9 @@ int main(int argc, char *argv[])
             }
             else if (IsFileExtension(droppedFiles.paths[0], ".png"))
             {
-                // TODO: Support icons loading from image
+                // TODO: Support icons loading from image, requires some config parameters
                 //Image image = LoadImage(droppedFiles[0]);
-                //LoadIconsFromImage(image, RAYGUI_ICON_MAX_ICONS, 16, 16, 1);    // Loading window required to config parameters (similar to raw)
+                //LoadIconsFromImage(image, RAYGUI_ICON_MAX_ICONS, 16, 16, 1);
                 //UnloadImage(image);
 
                 // TODO: Load icons name id from PNG zTXt chunk if available
